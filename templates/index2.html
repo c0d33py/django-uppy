@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Uppy</title>
+    <link href="https://releases.transloadit.com/uppy/v2.12.1/uppy.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="drag-drop-area"></div>
+
+    <script src="https://releases.transloadit.com/uppy/v2.12.1/uppy.min.js"></script>
+    <script>
+        let chunkSize = parseInt(5242880, 10)
+        var uppy = new Uppy.Core({
+            allowMultipleUploadBatches: true,
+            debug: false,
+            restrictions: {
+                maxFileSize: 100000000,
+                allowedFileTypes: ['image/*', 'video/*'],
+            }
+        })
+            .use(Uppy.Dashboard, {
+                inline: true,
+                target: '#drag-drop-area',
+                proudlyDisplayPoweredByUppy: false,
+                showProgressDetials: true
+            })
+            .use(Uppy.Tus, {
+                // endpoint: "https://tusd.tusdemo.net/files/",
+                endpoint: "http://localhost:8000/tus/upload/",
+                headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+                chunkSize: chunkSize,
+                retryDelays: [0, 1000, 3000, 5000],
+                fileDate: true,
+                fileName: 'file',
+                // limit: 1
+            }
+            )
+
+        uppy.on('complete', result => {
+            console.log('successful files:', result.successful)
+            console.log('failed files:', result.failed)
+        })
+    </script>
+</body>
+
+</html>
