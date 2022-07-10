@@ -5,7 +5,8 @@ from django.http import JsonResponse
 
 
 class DemoClientView(TemplateView):
-    template_name = "index2.html"
+    # template_name = "tus.html"
+    template_name = "uppy.html"
 
 
 def FileUpload(request):

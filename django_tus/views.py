@@ -1,4 +1,5 @@
 import base64
+import imp
 import logging
 
 from django.utils.decorators import method_decorator
@@ -10,6 +11,7 @@ from django_tus.response import TusResponse
 from django_tus.signals import tus_upload_finished_signal
 from django_tus.tusfile import TusFile, TusChunk, FilenameGenerator
 from pathvalidate import is_valid_filename
+
 
 logger = logging.getLogger(__name__)
 
@@ -77,10 +79,13 @@ class TusUpload(View):
     def head(self, request, resource_id):
         tus_file = TusFile.get_tusfile_or_404(str(resource_id))
 
-        return TusResponse(status=200,
-                           extra_headers={
-                               'Upload-Offset': tus_file.offset,
-                               'Upload-Length': tus_file.file_size})
+        return TusResponse(
+            status=200,
+            extra_headers={
+                'Upload-Offset': tus_file.offset,
+                'Upload-Length': tus_file.file_size
+            }
+        )
 
     def patch(self, request, resource_id, *args, **kwargs):
 

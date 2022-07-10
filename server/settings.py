@@ -135,19 +135,19 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-TUS_UPLOAD_DIR = os.path.join(BASE_DIR, 'temp')
+TUS_UPLOAD_DIR = os.path.join(BASE_DIR, 'tus-uploads')
 TUS_DESTINATION_DIR = os.path.join(BASE_DIR, 'media', 'uploads')
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
-TUS_FILE_NAME_FORMAT = 'keep'  # 'random-suffix', 'random', 'keep'
+TUS_FILE_NAME_FORMAT = 'random'  # 'random-suffix', 'random', 'keep'
 TUS_EXISTING_FILE = 'error'  # 'overwrite'  'error', 'rename'
 
 
 # Since django-tus uses the django cache, if you are running multiple instances(e.g. via uwsgi) you need to change
 # the default cache to either database-backed or file-backed, for example like this:
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/var/tmp/django_cache',
-    }
-}
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+#         'LOCATION': '/var/tmp/django_cache',
+#     }
+# }
