@@ -51,6 +51,7 @@ class TusUpload(View):
                     metadata[key] = value
                 else:
                     metadata[splited_metadata[0]] = ""
+        print(metadata)
         return metadata
 
     def options(self, request, *args, **kwargs):
